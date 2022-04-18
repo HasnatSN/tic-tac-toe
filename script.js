@@ -1,5 +1,5 @@
 const gameBoard = document.querySelector(".gameboard");
-const playAgainBtn = document.getElementById("replay-btn")
+const playAgainBtn = document.getElementById("replay-btn");
 
 let signOne = "X";
 let signTwo = "O";
@@ -13,10 +13,26 @@ function createBoard() {
     cell.innerText = "";
     gameBoard.appendChild(cell).className = "grid-item";
   }
-
   const cells = document.querySelectorAll(".grid-item");
-
   assignEventL(cells);
+}
+
+function botMove(cells) {
+  let availableCells = [];
+  cells.forEach((cell) => {
+    if (!isOccupied(cell)) {
+      availableCells.push(cell);
+    }
+  });
+
+  function delay(time) {
+    return new Promise((resolve) => setTimeout(resolve, time));
+  }
+
+  delay(100).then(() => {
+    cell = availableCells[Math.floor(Math.random() * availableCells.length)];
+    cell.textContent = whoClicked();
+  });
 }
 
 function whoClicked() {
@@ -43,6 +59,7 @@ function assignEventL(cells) {
       if (!isOccupied(cell)) {
         sign = whoClicked();
         cell.textContent = sign;
+        botMove(cells);
         gameOver();
       }
     });
@@ -50,7 +67,7 @@ function assignEventL(cells) {
 }
 
 playAgainBtn.addEventListener("click", () => {
-    playAgain();
-}); 
+  playAgain();
+});
 
 createBoard();

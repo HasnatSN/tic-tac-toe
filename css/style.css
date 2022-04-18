@@ -22,6 +22,8 @@ header {
     display: flex;
     justify-content: center;
     padding: 2rem;
+    font-size: 2rem;
+    text-align: center;
 }
 
 main {
@@ -29,8 +31,24 @@ main {
     margin: auto;
     width: fit-content;
     display: flex;
+    flex-direction: column;
+    gap: 2rem;
     justify-content: center;
     align-items: center;
+}
+
+button {
+    padding: 1rem;
+    background-color: white;
+    color: black;
+    border-radius: 8px;
+    font-weight: 700;
+    font-size: 1.2rem;
+    border: none;
+}
+
+button:hover {
+    background-color: rgb(129, 255, 125);
 }
 
 .gameboard {
@@ -47,9 +65,14 @@ main {
     justify-content: center;
     align-items: center;
     font-size: 8rem;
-    border: 3px solid white;
+    border: 3px solid rgb(134, 134, 134);
     width: 200px;
     height: 200px;
+    user-select: none;
+}
+
+.grid-item:hover {
+    background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0 0);
 }
 
 footer {

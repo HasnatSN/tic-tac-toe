@@ -1,4 +1,5 @@
 const gameBoard = document.querySelector(".gameboard");
+const playAgainBtn = document.getElementById("replay-btn")
 
 let signOne = "X";
 let signTwo = "O";
@@ -28,9 +29,13 @@ function isOccupied(cell) {
   return false;
 }
 
-function gameOver() {
-    
+function playAgain() {
+  gameBoard.textContent = "";
+  createBoard();
+  player = true;
 }
+
+function gameOver() {}
 
 function assignEventL(cells) {
   cells.forEach((cell) => {
@@ -43,5 +48,9 @@ function assignEventL(cells) {
     });
   });
 }
+
+playAgainBtn.addEventListener("click", () => {
+    playAgain();
+}); 
 
 createBoard();

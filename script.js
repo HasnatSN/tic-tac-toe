@@ -19,13 +19,8 @@ function createBoard() {
 }
 
 function whoClicked() {
-  if (player) {
-    player = false;
-    return signOne;
-  } else {
-    player = true;
-    return signTwo;
-  }
+  player = !player;
+  return player ? signTwo : signOne;
 }
 
 function isOccupied(cell) {
@@ -39,13 +34,13 @@ function gameOver() {
 
 function assignEventL(cells) {
   cells.forEach((cell) => {
-    if (!isOccupied(cell)) {
-      cell.addEventListener("click", () => {
+    cell.addEventListener("click", () => {
+      if (!isOccupied(cell)) {
         sign = whoClicked();
         cell.textContent = sign;
         gameOver();
-      });
-    }
+      }
+    });
   });
 }
 

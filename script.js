@@ -4,12 +4,28 @@ const playAgainBtn = document.getElementById("replay-btn");
 let signOne = "X";
 let signTwo = "O";
 let player = true;
+let winner = "";
+
+let winningPatterns = [
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+  false,
+];
+
+let gameOver = false;
 
 function createBoard() {
   gameBoard.style.setProperty("--grid-rows", 3);
   gameBoard.style.setProperty("--grid-cols", 3);
   for (i = 0; i < 3 * 3; i++) {
     let cell = document.createElement("div");
+    cell.setAttribute("data-index", i);
     cell.innerText = "";
     gameBoard.appendChild(cell).className = "grid-item";
   }
@@ -25,14 +41,10 @@ function botMove(cells) {
     }
   });
 
-  function delay(time) {
-    return new Promise((resolve) => setTimeout(resolve, time));
-  }
+  cell = availableCells[Math.floor(Math.random() * availableCells.length)];
+  cell.textContent = whoClicked();
+  winningPatterns[cell.dataset.index] = true;
 
-  delay(100).then(() => {
-    cell = availableCells[Math.floor(Math.random() * availableCells.length)];
-    cell.textContent = whoClicked();
-  });
 }
 
 function whoClicked() {
@@ -49,9 +61,61 @@ function playAgain() {
   gameBoard.textContent = "";
   createBoard();
   player = true;
+  winningPatterns = [
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+    false,
+  ];
+  gameOver = false;
 }
 
-function gameOver() {}
+function isGameOver(cell) {
+  cells = document.querySelectorAll(".grid-item");
+
+  switch (true) {
+    case winningPatterns[0] == true &&
+      winningPatterns[1] == true &&
+      winningPatterns[2] == true:
+      winner = cells[1].textContent;
+      console.log(cells);
+      console.log(cells[1].textContent);
+      gameOver = true;
+    case winningPatterns[3] == true &&
+      winningPatterns[4] == true &&
+      winningPatterns[5] == true:
+      gameOver = true;
+    case winningPatterns[6] == true &&
+      winningPatterns[7] == true &&
+      winningPatterns[8] == true:
+      gameOver = true;
+    case winningPatterns[0] == true &&
+      winningPatterns[3] == true &&
+      winningPatterns[6] == true:
+      gameOver = true;
+    case winningPatterns[1] == true &&
+      winningPatterns[4] == true &&
+      winningPatterns[7] == true:
+      gameOver = true;
+    case winningPatterns[2] == true &&
+      winningPatterns[5] == true &&
+      winningPatterns[8] == true:
+      gameOver = true;
+    case winningPatterns[0] == true &&
+      winningPatterns[4] == true &&
+      winningPatterns[8] == true:
+      gameOver = true;
+    case winningPatterns[2] == true &&
+      winningPatterns[4] == true &&
+      winningPatterns[6] == true:
+      gameOver = true;
+  }
+}
 
 function assignEventL(cells) {
   cells.forEach((cell) => {
@@ -59,8 +123,12 @@ function assignEventL(cells) {
       if (!isOccupied(cell)) {
         sign = whoClicked();
         cell.textContent = sign;
+
         botMove(cells);
-        gameOver();
+        winningPatterns[cell.dataset.index] = true;
+        console.log(gameOver);
+        isGameOver(cell);
+        console.log(gameOver);
       }
     });
   });

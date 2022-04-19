@@ -64,12 +64,29 @@ button:hover {
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 8rem;
+    font-size: calc(200px * 0.9);
     border: 3px solid rgb(134, 134, 134);
     width: 200px;
     height: 200px;
     user-select: none;
 }
+
+.grid-item:first-child, .grid-item:nth-child(2), .grid-item:nth-child(3) {
+    border-top: none;
+}
+
+.grid-item:nth-child(3n + 1){
+    border-left: none;
+}
+
+.grid-item:nth-child(3n + 3){
+    border-right: none;
+}
+
+.grid-item:nth-child(7), .grid-item:nth-child(8), .grid-item:last-child {
+    border-bottom: none;
+}
+
 
 .grid-item:hover {
     background-image: linear-gradient(rgba(255, 255, 255, 0.1) 0 0);

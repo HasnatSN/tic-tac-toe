@@ -53,13 +53,13 @@ function gameIsOver() {
 }
 
 function currentGameState() {
+  checkForDraw();
   for (let index = 0; index < oGameBoard.winningPatterns.length; index++) {
     const pattern = oGameBoard.winningPatterns[index];
     const result = pattern.every(isSameSign);
     if (result) gameIsOver();
   }
   switchSign();
-  checkForDraw();
 }
 
 function assignEventL(cell) {
